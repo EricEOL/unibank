@@ -17,16 +17,29 @@ public class Banco {
     }
 
     public Conta novaContaCorrente(Cliente cliente) {
-     Conta conta = new ContaCorrente(this, cliente);
+        for(Conta conta: contas) {
+            if(conta.getCliente().getCpf() == cliente.getCpf() && conta.getClass() == ContaCorrente.class) {
+                throw new RuntimeException("Não é possível criar duas contas correntes para o mesmo cliente");
+            }
+        }
 
-     cliente.setCc((ContaCorrente) conta);
+        Conta conta = new ContaCorrente(this, cliente);
 
-     contas.add(conta);
+        cliente.setCc((ContaCorrente) conta);
 
-     return conta;
+        contas.add(conta);
+
+        return conta;
     }
 
     public Conta novaContaPoupanca(Cliente cliente) {
+
+        for(Conta conta: contas) {
+            if(conta.getCliente().getCpf() == cliente.getCpf() && conta.getClass() == ContaPoupanca.class) {
+                throw new RuntimeException("Não é possível criar duas contas poupança para o mesmo cliente");
+            }
+        }
+
         Conta conta = new ContaPoupanca(this, cliente);
 
         cliente.setCp((ContaPoupanca) conta);
