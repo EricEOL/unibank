@@ -26,6 +26,16 @@ public class Banco {
      return conta;
     }
 
+    public Conta novaContaPoupanca(Cliente cliente) {
+        Conta conta = new ContaPoupanca(this, cliente);
+
+        cliente.setCp((ContaPoupanca) conta);
+
+        contas.add(conta);
+
+        return conta;
+    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -64,5 +74,13 @@ public class Banco {
 
     public void setContas(List<Conta> contas) {
         this.contas = contas;
+    }
+
+    @Override
+    public String toString() {
+        return "Banco{" +
+                "codigo='" + codigo + '\'' +
+                ", nome='" + nome + '\'' +
+                '}';
     }
 }

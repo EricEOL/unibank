@@ -18,59 +18,68 @@ public abstract class Conta {
         this.cliente = cliente;
     }
 
-    private void depositar(Double valor) {
+    protected String depositar(Double valor) {
+        if(valor <= 0) return "Deposite um valor válido";
 
+        saldo += valor;
+        return "DEPÓSITO no valor de " + valor + " realizado com sucesso";
     }
 
-    public int getId() {
+    protected String sacar(Double valor) {
+        if(valor > this.saldo || valor <= 0) return "Não é possível realizar o saque desse valor";
+
+        saldo -= valor;
+        return "SAQUE no valor de " + valor + " realizado com sucesso";
+    }
+
+    // private String transferir(Conta contaDestino, Double valor ) {}
+
+    protected int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    protected void setId(int id) {
         this.id = id;
     }
 
-    public Banco getBanco() {
+    protected Banco getBanco() {
         return banco;
     }
 
-    public void setBanco(Banco banco) {
+    protected void setBanco(Banco banco) {
         this.banco = banco;
     }
 
-    public Double getSaldo() {
+    protected Double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(Double saldo) {
+    protected void setSaldo(Double saldo) {
         this.saldo = saldo;
     }
 
-    public String getNumeroDaagencia() {
+    protected String getNumeroDaagencia() {
         return numeroDaagencia;
     }
 
-    public void setNumeroDaagencia(String numeroDaagencia) {
+    protected void setNumeroDaagencia(String numeroDaagencia) {
         this.numeroDaagencia = numeroDaagencia;
     }
 
-    public String getNumeroDaconta() {
+    protected String getNumeroDaconta() {
         return numeroDaconta;
     }
 
-    public void setNumeroDaconta(String numeroDaconta) {
+    protected void setNumeroDaconta(String numeroDaconta) {
         this.numeroDaconta = numeroDaconta;
     }
 
-    public Cliente getCliente() {
+    protected Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    protected void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
-    // private String sacar(Double valor) {}
-
-    // private String transferir(Conta contaDestino, Double valor ) {}
 }
