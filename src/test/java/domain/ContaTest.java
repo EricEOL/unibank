@@ -46,4 +46,55 @@ public class ContaTest {
         Assertions.assertEquals(1000d, conta.getSaldo());
     }
 
+    @Test
+    void deveRealizarTransferenciaEntreContasComPIX() {
+        this.conta = banco.novaContaCorrente(cliente);
+        Conta conta2 = banco.novaContaPoupanca(cliente);
+
+        conta.depositar(3000d);
+        conta2.depositar(5500d);
+
+        conta.transferir(conta2, 2500d, TiposDeTransferencia.PIX);
+
+        System.out.println("Saldo - Conta1: " + conta.getSaldo());
+        System.out.println("Saldo - Conta2: " + conta2.getSaldo());
+
+        Assertions.assertEquals(500d, conta.getSaldo());
+        Assertions.assertEquals(8000d, conta2.getSaldo());
+    }
+
+    @Test
+    void deveRealizarTransferenciaEntreContasComTED() {
+        this.conta = banco.novaContaCorrente(cliente);
+        Conta conta2 = banco.novaContaPoupanca(cliente);
+
+        conta.depositar(3000d);
+        conta2.depositar(5500d);
+
+        conta.transferir(conta2, 2500d, TiposDeTransferencia.TED);
+
+        System.out.println("Saldo - Conta1: " + conta.getSaldo());
+        System.out.println("Saldo - Conta2: " + conta2.getSaldo());
+
+        Assertions.assertEquals(485d, conta.getSaldo());
+        Assertions.assertEquals(8000d, conta2.getSaldo());
+    }
+
+    @Test
+    void deveRealizarTransferenciaEntreContasComDOC() {
+        this.conta = banco.novaContaCorrente(cliente);
+        Conta conta2 = banco.novaContaPoupanca(cliente);
+
+        conta.depositar(3000d);
+        conta2.depositar(5500d);
+
+        conta.transferir(conta2, 2500d, TiposDeTransferencia.DOC);
+
+        System.out.println("Saldo - Conta1: " + conta.getSaldo());
+        System.out.println("Saldo - Conta2: " + conta2.getSaldo());
+
+        Assertions.assertEquals(490d, conta.getSaldo());
+        Assertions.assertEquals(8000d, conta2.getSaldo());
+    }
+
 }

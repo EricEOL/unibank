@@ -32,7 +32,19 @@ public abstract class Conta {
         return "SAQUE no valor de " + valor + " realizado com sucesso";
     }
 
-    // private String transferir(Conta contaDestino, Double valor ) {}
+    protected String transferir(Conta contaDestino, Double valor, TiposDeTransferencia tipo ) {
+        double valorComTaxa = valor;
+
+        if(tipo.equals(TiposDeTransferencia.TED)) valorComTaxa = valor + 15d;
+        if(tipo.equals(TiposDeTransferencia.DOC)) valorComTaxa = valor + 10d;
+
+        if(valorComTaxa > this.saldo || valor <= 0) return "Não é possível realizar uma transferência com esse valor";
+
+        this.sacar(valorComTaxa);
+        contaDestino.depositar(valor);
+
+        return "TRANSFERÊNCIA no valor de " + valor + " para a Conta de " + contaDestino.getCliente().getNome() + " realizada com sucesso";
+    }
 
     protected int getId() {
         return id;
