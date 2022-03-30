@@ -26,7 +26,7 @@ public abstract class Conta {
     }
 
     protected String sacar(Double valor) {
-        if(valor > this.saldo || valor <= 0) return "Não é possível realizar o saque desse valor";
+        if(valor > this.saldo || valor <= 0) throw new RuntimeException("Não é possível realizar o saque desse valor");
 
         saldo -= valor;
         return "SAQUE no valor de " + valor + " realizado com sucesso";

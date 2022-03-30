@@ -24,6 +24,16 @@ public class BancoTest {
     }
 
     @Test
+    void deveAssociarUmaContaPoupancaAoBanco() {
+        Banco banco = new Banco("001", "unibank");
+        Cliente cliente = new Cliente("11111111111", "Rebecca Lopes");
+
+        Conta contaCriada = banco.novaContaPoupanca(cliente);
+
+        Assertions.assertTrue(banco.getContas().contains(contaCriada));
+    }
+
+    @Test
     void identificacaoDeNumeroDaContaDeveSerSequencial() {
         Banco banco = new Banco("001", "unibank");
         Cliente cliente1 = new Cliente("11111111111", "Rebecca Lopes");
@@ -36,16 +46,6 @@ public class BancoTest {
         System.out.println("Conta2: " + conta2.getNumeroDaconta());
 
         Assertions.assertEquals("0002", conta2.getNumeroDaconta());
-    }
-
-    @Test
-    void deveAssociarUmaContaPoupancaAoBanco() {
-        Banco banco = new Banco("001", "unibank");
-        Cliente cliente = new Cliente("11111111111", "Rebecca Lopes");
-
-        Conta contaCriada = banco.novaContaPoupanca(cliente);
-
-        Assertions.assertTrue(banco.getContas().contains(contaCriada));
     }
 
     @Test
