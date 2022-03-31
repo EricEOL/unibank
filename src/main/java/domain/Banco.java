@@ -53,6 +53,8 @@ public class Banco {
     public Emprestimo realizarEmprestimo(Conta contaSolicitante, Double valorSolicitado, int parcelas) {
         if (valorSolicitado > 30000d) throw new RuntimeException("Valor solicitado excede o permitido");
 
+        if(!contas.contains(contaSolicitante)) throw new RuntimeException("O empréstimo só é realizado para contas relacionadas ao banco, contas de outros bancos não são permitidas");
+
         Emprestimo emprestimo = new Emprestimo(contaSolicitante, valorSolicitado, parcelas);
         contaSolicitante.depositar(valorSolicitado);
         this.setSaldoProprio(saldoProprio - valorSolicitado);
