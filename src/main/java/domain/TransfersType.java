@@ -1,6 +1,6 @@
 package domain;
 
-public enum TiposDeTransferencia {
+public enum TransfersType {
     PIX,
     TED,
     DOC

@@ -2,20 +2,20 @@ package domain;
 
 import java.util.GregorianCalendar;
 
-public class Emprestimo {
+public class Loan {
 
-    private final Conta conta;
-    private final Double valorInicial;
-    private Double valorCorrente;
-    private final Double valorParcelas;
+    private final Account account;
+    private final Double valueInicial;
+    private Double valueCorrente;
+    private final Double valueParcelas;
     private final int parcelas;
     private int parcelasPagas;
     private GregorianCalendar dataDoProximoPagamento;
 
-    public Emprestimo(Conta conta, Double valorInicial, int parcelas) {
-        this.conta = conta;
-        this.valorInicial = valorInicial;
-        this.valorParcelas = valorInicial/parcelas;
+    public Loan(Account account, Double valueInicial, int parcelas) {
+        this.account = account;
+        this.valueInicial = valueInicial;
+        this.valueParcelas = valueInicial/parcelas;
         this.parcelas = parcelas;
 
         GregorianCalendar dataPagamento = new GregorianCalendar();
@@ -27,13 +27,13 @@ public class Emprestimo {
     public String pagarParcela() {
         if(parcelasPagas < parcelas) {
             try {
-                this.conta.sacar(valorParcelas);
+                this.account.withdraw(valueParcelas);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 return e.getMessage();
             }
 
-            valorCorrente -= valorParcelas;
+            valueCorrente -= valueParcelas;
             parcelasPagas += 1;
 
             this.atualizarDataDoProximoPagamento();
@@ -50,24 +50,24 @@ public class Emprestimo {
         this.dataDoProximoPagamento = calendar;
     }
 
-    public Conta getConta() {
-        return conta;
+    public Account getConta() {
+        return account;
     }
 
-    public Double getValorInicial() {
-        return valorInicial;
+    public Double getValueInicial() {
+        return valueInicial;
     }
 
-    public Double getValorCorrente() {
-        return valorCorrente;
+    public Double getValueCorrente() {
+        return valueCorrente;
     }
 
-    public void setValorCorrente(Double valorCorrente) {
-        this.valorCorrente = valorCorrente;
+    public void setValueCorrente(Double valueCorrente) {
+        this.valueCorrente = valueCorrente;
     }
 
-    public Double getValorParcelas() {
-        return valorParcelas;
+    public Double getValueParcelas() {
+        return valueParcelas;
     }
 
     public int getParcelas() {

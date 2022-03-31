@@ -1,0 +1,101 @@
+package domain;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Bank {
+
+    private final String cod;
+    private final String name;
+    private Double bankBalance = 10000000000000000d;
+    private Double accountsBalance;
+    private List<Account> accounts = new ArrayList();
+    private List<Loan> loans = new ArrayList();
+
+    public Bank(String cod, String name) {
+        this.cod = cod;
+        this.name = name;
+    }
+
+    public Account novaContaCorrente(Client client) {
+        for (Account account : accounts) {
+            if (account.getClient().getCpf() == client.getCpf() && account.getClass() == CheckingAccount.class) {
+                throw new RuntimeException("Não é possível criar duas contas correntes para o mesmo cliente");
+            }
+        }
+
+        Account account = new CheckingAccount(this, client);
+
+        client.setCc((CheckingAccount) account);
+
+        accounts.add(account);
+
+        return account;
+    }
+
+    public Account novaContaPoupanca(Client client) {
+
+        for (Account account : accounts) {
+            if (account.getClient().getCpf() == client.getCpf() && account.getClass() == SavingsAccount.class) {
+                throw new RuntimeException("Não é possível criar duas contas poupança para o mesmo cliente");
+            }
+        }
+
+        Account account = new SavingsAccount(this, client);
+
+        client.setCp((SavingsAccount) account);
+
+        accounts.add(account);
+
+        return account;
+    }
+
+    public Loan takeOutLoan(Account accountSolicitante, Double requestedValue, int parcelas) {
+        if (requestedValue > 30000d) throw new RuntimeException("Value solicitado excede o permitido");
+
+        if(!accounts.contains(accountSolicitante)) throw new RuntimeException("O empréstimo só é realizado para contas relacionadas ao bank, contas de outros banks não são permitidas");
+
+        Loan loan = new Loan(accountSolicitante, requestedValue, parcelas);
+        accountSolicitante.deposit(requestedValue);
+        this.setBankBalance(bankBalance - requestedValue);
+        this.loans.add(loan);
+
+        return loan;
+    }
+
+    public String getCod() {
+        return cod;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Double getBankBalance() {
+        return bankBalance;
+    }
+
+    public void setBankBalance(Double bankBalance) {
+        this.bankBalance = bankBalance;
+    }
+
+    public Double getAccountsBalance() {
+        return accountsBalance;
+    }
+
+    public List<Account> getContas() {
+        return accounts;
+    }
+
+    public List<Loan> getLoans() {
+        return loans;
+    }
+
+    @Override
+    public String toString() {
+        return "Bank{" +
+                "cod='" + cod + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
