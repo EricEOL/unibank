@@ -1,84 +1,117 @@
 package domain;
 
+import java.text.DecimalFormat;
 import java.util.GregorianCalendar;
 
 public class Loan {
 
     private final Account account;
-    private final Double valueInicial;
-    private Double valueCorrente;
-    private final Double valueParcelas;
-    private final int parcelas;
-    private int parcelasPagas;
-    private GregorianCalendar dataDoProximoPagamento;
+    private final Double initialValue;
+    private Double currentValue;
+    private final Double valueInstallments;
+    private final int installments;
+    private int installmentsPaid;
+    private GregorianCalendar nextPaymentDate;
 
-    public Loan(Account account, Double valueInicial, int parcelas) {
+    public Loan(Account account, Double initialValue, int installments) {
         this.account = account;
-        this.valueInicial = valueInicial;
-        this.valueParcelas = valueInicial/parcelas;
-        this.parcelas = parcelas;
+        this.initialValue = initialValue;
+        this.currentValue = initialValue;
 
-        GregorianCalendar dataPagamento = new GregorianCalendar();
-        dataPagamento.add(GregorianCalendar.MONTH, 1);
+        DecimalFormat dformat = new DecimalFormat("0.00");
 
-        this.dataDoProximoPagamento = dataPagamento;
+        this.valueInstallments = Double.parseDouble(dformat.format((initialValue * this.calculateRate(installments))/installments));
+        this.installments = installments;
+
+        GregorianCalendar paymentDate = new GregorianCalendar();
+        paymentDate.add(GregorianCalendar.MONTH, 1);
+
+        this.nextPaymentDate = paymentDate;
     }
 
-    public String pagarParcela() {
-        if(parcelasPagas < parcelas) {
+    public String payInstallment() {
+        if(installmentsPaid < installments) {
             try {
-                this.account.withdraw(valueParcelas);
+                this.account.withdraw(valueInstallments);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println("Não é possível realizar o pagamento da parcela porque não há saldo suficente na conta");
                 return e.getMessage();
             }
 
-            valueCorrente -= valueParcelas;
-            parcelasPagas += 1;
+            currentValue -= valueInstallments;
+            installmentsPaid += 1;
 
-            this.atualizarDataDoProximoPagamento();
-            return "A parcela nº " + parcelasPagas + " foi paga. Faltam " + (parcelas - parcelasPagas) + " parcelas para quitação";
+            this.updateNextPaymentDate();
+            return "A parcela nº " + installmentsPaid + " foi paga. Faltam " + (installments - installmentsPaid) + " installments para quitação";
         } else {
             return "Não há nenhuma parcela a ser paga nesse EMPRÉSTIMO, já está quitado";
         }
     }
 
-    public void atualizarDataDoProximoPagamento() {
-        GregorianCalendar calendar = new GregorianCalendar();
-        calendar.add(GregorianCalendar.MONTH, 1);
-
-        this.dataDoProximoPagamento = calendar;
+    public void updateNextPaymentDate() {
+        nextPaymentDate.add(GregorianCalendar.MONTH, 1);
     }
 
-    public Account getConta() {
+    public String paymentDateFormated() {
+        String paymentDate =
+                nextPaymentDate.get(GregorianCalendar.DAY_OF_MONTH) + "/" +
+                nextPaymentDate.get(GregorianCalendar.MONTH) + "/" +
+                nextPaymentDate.get(GregorianCalendar.YEAR);
+
+        return paymentDate;
+    }
+
+    public Account getAccount() {
         return account;
     }
 
-    public Double getValueInicial() {
-        return valueInicial;
+    public Double calculateRate(int installments) {
+        if(installments < 15) return 1.10;
+        return 1.14;
     }
 
-    public Double getValueCorrente() {
-        return valueCorrente;
+    public Double getInitialValue() {
+        return initialValue;
     }
 
-    public void setValueCorrente(Double valueCorrente) {
-        this.valueCorrente = valueCorrente;
+    public Double getCurrentValue() {
+        return currentValue;
     }
 
-    public Double getValueParcelas() {
-        return valueParcelas;
+    public void setCurrentValue(Double currentValue) {
+        this.currentValue = currentValue;
     }
 
-    public int getParcelas() {
-        return parcelas;
+    public Double getValueInstallments() {
+        return valueInstallments;
     }
 
-    public int getParcelasPagas() {
-        return parcelasPagas;
+    public int getInstallments() {
+        return installments;
     }
 
-    public GregorianCalendar getDataDoProximoPagamento() {
-        return dataDoProximoPagamento;
+    public int getInstallmentsPaid() {
+        return installmentsPaid;
+    }
+
+    public GregorianCalendar getNextPaymentDate() {
+        return nextPaymentDate;
+    }
+
+    public void setNextPaymentDate(GregorianCalendar paymentDate) {
+        this.nextPaymentDate = paymentDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Loan{" +
+                "account=" + account +
+                ", initialValue=" + initialValue +
+                ", currentValue=" + currentValue +
+                ", valueInstallments=" + valueInstallments +
+                ", installments=" + installments +
+                ", installmentsPaid=" + installmentsPaid +
+                ", nextPaymentDate=" + this.paymentDateFormated() +
+                '}';
     }
 }

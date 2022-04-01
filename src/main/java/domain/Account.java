@@ -10,7 +10,7 @@ public abstract class Account {
     private Client client;
 
     public Account(Bank bank, Client client) {
-        int nextAccount = bank.getContas().size() + 1;
+        int nextAccount = bank.getAccounts().size() + 1;
 
         this.id = nextAccount;
         this.bank = bank;
@@ -26,7 +26,7 @@ public abstract class Account {
     }
 
     protected String withdraw(Double value) {
-        if(value > this.balance || value <= 0) throw new RuntimeException("Não é possível realizar o saque desse value");
+        if(value > this.balance || value <= 0) throw new RuntimeException("Não é possível realizar o saque desse valor");
 
         balance -= value;
         return "SAQUE no value de " + value + " realizado com sucesso";

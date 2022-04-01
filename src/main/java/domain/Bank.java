@@ -17,7 +17,7 @@ public class Bank {
         this.name = name;
     }
 
-    public Account novaContaCorrente(Client client) {
+    public Account newCheckingAccount(Client client) {
         for (Account account : accounts) {
             if (account.getClient().getCpf() == client.getCpf() && account.getClass() == CheckingAccount.class) {
                 throw new RuntimeException("Não é possível criar duas contas correntes para o mesmo cliente");
@@ -33,7 +33,7 @@ public class Bank {
         return account;
     }
 
-    public Account novaContaPoupanca(Client client) {
+    public Account newSavingsAccount(Client client) {
 
         for (Account account : accounts) {
             if (account.getClient().getCpf() == client.getCpf() && account.getClass() == SavingsAccount.class) {
@@ -50,13 +50,13 @@ public class Bank {
         return account;
     }
 
-    public Loan takeOutLoan(Account accountSolicitante, Double requestedValue, int parcelas) {
+    public Loan takeOutLoan(Account requestedAccount, Double requestedValue, int installments) {
         if (requestedValue > 30000d) throw new RuntimeException("Value solicitado excede o permitido");
 
-        if(!accounts.contains(accountSolicitante)) throw new RuntimeException("O empréstimo só é realizado para contas relacionadas ao bank, contas de outros banks não são permitidas");
+        if(!accounts.contains(requestedAccount)) throw new RuntimeException("O empréstimo só é realizado para contas relacionadas ao bank, contas de outros banks não são permitidas");
 
-        Loan loan = new Loan(accountSolicitante, requestedValue, parcelas);
-        accountSolicitante.deposit(requestedValue);
+        Loan loan = new Loan(requestedAccount, requestedValue, installments);
+        requestedAccount.deposit(requestedValue);
         this.setBankBalance(bankBalance - requestedValue);
         this.loans.add(loan);
 
@@ -83,7 +83,7 @@ public class Bank {
         return accountsBalance;
     }
 
-    public List<Account> getContas() {
+    public List<Account> getAccounts() {
         return accounts;
     }
 

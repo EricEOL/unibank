@@ -18,9 +18,9 @@ public class BankTest {
         Bank bank = new Bank("001", "unibank");
         Client client = new Client("11111111111", "Rebecca Lopes");
 
-        Account accountCriada = bank.novaContaCorrente(client);
+        Account accountCriada = bank.newCheckingAccount(client);
 
-        Assertions.assertTrue(bank.getContas().contains(accountCriada));
+        Assertions.assertTrue(bank.getAccounts().contains(accountCriada));
     }
 
     @Test
@@ -28,9 +28,9 @@ public class BankTest {
         Bank bank = new Bank("001", "unibank");
         Client client = new Client("11111111111", "Rebecca Lopes");
 
-        Account accountCriada = bank.novaContaPoupanca(client);
+        Account accountCriada = bank.newSavingsAccount(client);
 
-        Assertions.assertTrue(bank.getContas().contains(accountCriada));
+        Assertions.assertTrue(bank.getAccounts().contains(accountCriada));
     }
 
     @Test
@@ -39,8 +39,8 @@ public class BankTest {
         Client client1 = new Client("11111111111", "Rebecca Lopes");
         Client client2 = new Client("22222222222", "Thamiris Lopes");
 
-        Account account1 = bank.novaContaCorrente(client1);
-        Account account2 = bank.novaContaCorrente(client2);
+        Account account1 = bank.newCheckingAccount(client1);
+        Account account2 = bank.newCheckingAccount(client2);
 
         System.out.println("Conta1: " + account1.getAccountNumber());
         System.out.println("Conta2: " + account2.getAccountNumber());
@@ -53,9 +53,9 @@ public class BankTest {
         Bank bank = new Bank("001", "unibank");
         Client client = new Client("11111111111", "Rebecca Lopes");
 
-        bank.novaContaCorrente(client);
+        bank.newCheckingAccount(client);
 
-        Assertions.assertThrows(RuntimeException.class, () -> bank.novaContaCorrente(client));
+        Assertions.assertThrows(RuntimeException.class, () -> bank.newCheckingAccount(client));
     }
 
     @Test
@@ -63,8 +63,8 @@ public class BankTest {
         Bank bank = new Bank("001", "unibank");
         Client client = new Client("11111111111", "Rebecca Lopes");
 
-        bank.novaContaPoupanca(client);
+        bank.newSavingsAccount(client);
 
-        Assertions.assertThrows(RuntimeException.class, () -> bank.novaContaPoupanca(client));
+        Assertions.assertThrows(RuntimeException.class, () -> bank.newSavingsAccount(client));
     }
 }

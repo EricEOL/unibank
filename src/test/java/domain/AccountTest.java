@@ -11,7 +11,7 @@ public class AccountTest {
 
     @Test
     void shouldCreateANewAccount() {
-        this.account = bank.novaContaCorrente(client);
+        this.account = bank.newCheckingAccount(client);
 
         System.out.println("Agência: " + account.getAgencyNumber());
         System.out.println("Conta: " + account.getAccountNumber());
@@ -22,7 +22,7 @@ public class AccountTest {
 
     @Test
     void shouldMakeADeposit() {
-        this.account = bank.novaContaCorrente(client);
+        this.account = bank.newCheckingAccount(client);
 
         String retorno = account.deposit(3000d);
 
@@ -34,7 +34,7 @@ public class AccountTest {
 
     @Test
     void shouldMakeAWithdraw() {
-        this.account = bank.novaContaCorrente(client);
+        this.account = bank.newCheckingAccount(client);
 
         account.deposit(2000d);
 
@@ -48,8 +48,8 @@ public class AccountTest {
 
     @Test
     void shouldMakeTransferBetweenAccountWithPIX() {
-        this.account = bank.novaContaCorrente(client);
-        Account account2 = bank.novaContaPoupanca(client);
+        this.account = bank.newCheckingAccount(client);
+        Account account2 = bank.newSavingsAccount(client);
 
         account.deposit(3000d);
         account2.deposit(5500d);
@@ -65,8 +65,8 @@ public class AccountTest {
 
     @Test
     void shouldMakeTransferBetweenAccountWithTED() {
-        this.account = bank.novaContaCorrente(client);
-        Account account2 = bank.novaContaPoupanca(client);
+        this.account = bank.newCheckingAccount(client);
+        Account account2 = bank.newSavingsAccount(client);
 
         account.deposit(3000d);
         account2.deposit(5500d);
@@ -82,8 +82,8 @@ public class AccountTest {
 
     @Test
     void shouldMakeTransferBetweenAccountWithDOC() {
-        this.account = bank.novaContaCorrente(client);
-        Account account2 = bank.novaContaPoupanca(client);
+        this.account = bank.newCheckingAccount(client);
+        Account account2 = bank.newSavingsAccount(client);
 
         account.deposit(3000d);
         account2.deposit(5500d);
