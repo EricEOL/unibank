@@ -23,7 +23,7 @@ A proposta do sistema é que seja um sistema bancário, com as seguintes possibi
   * TED
 * Empréstimos
 
-Para demonstração da utilização do sistema, foram escritos diversos testes com JUNIT5 para variados cenários de utilização, que estão na ![pasta de testes](https://github.com/EricEOL/unibank/tree/main/src/test/java/domain).
+Para demonstração da utilização do sistema, foram escritos diversos testes com JUNIT5 para variados cenários de utilização, que estão na [pasta de testes](https://github.com/EricEOL/unibank/tree/main/src/test/java/domain).
 
 ## Diagrama de Classe
 
