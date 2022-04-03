@@ -67,4 +67,26 @@ public class BankTest {
 
         Assertions.assertThrows(RuntimeException.class, () -> bank.newSavingsAccount(client));
     }
+
+    @Test
+    void shouldReturnUnpaidLoans() {
+        Bank bank = new Bank("001", "unibank");
+        Client client = new Client("11111111111", "Rebecca Lopes");
+        Account account = bank.newCheckingAccount(client);
+
+        Loan loan = bank.takeOutLoan(account, 10000d, 15);
+        Loan loan2 = bank.takeOutLoan(account, 15000d, 18);
+        Loan loan3 = bank.takeOutLoan(account, 2000d, 2);
+
+        System.out.println("Empréstimos realizados antes de algum estar quitado: " + bank.getLoans().size());
+
+        for(int i = 1; i <= loan.getInstallments(); i++) {
+            loan.payInstallment();
+        }
+
+
+        System.out.println("Empréstimos realizados após algum estar quitado: " + bank.getLoans().size());
+
+        Assertions.assertEquals(2, bank.getLoans().size());
+    }
 }

@@ -42,6 +42,7 @@ public class Loan {
             installmentsPaid += 1;
 
             this.updateNextPaymentDate();
+            this.getAccount().getBank().verifyLoan(this);
             return "A parcela nº " + installmentsPaid + " foi paga. Faltam " + (installments - installmentsPaid) + " installments para quitação";
         } else {
             return "Não há nenhuma parcela a ser paga nesse EMPRÉSTIMO, já está quitado";

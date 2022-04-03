@@ -3,6 +3,9 @@ package domain;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AccountTest {
 
     public Bank bank = new Bank("001", "unibank");
@@ -96,5 +99,4 @@ public class AccountTest {
         Assertions.assertEquals(490d, account.getBalance());
         Assertions.assertEquals(8000d, account2.getBalance());
     }
-
 }

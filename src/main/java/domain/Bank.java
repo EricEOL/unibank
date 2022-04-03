@@ -53,7 +53,8 @@ public class Bank {
     public Loan takeOutLoan(Account requestedAccount, Double requestedValue, int installments) {
         if (requestedValue > 30000d) throw new RuntimeException("Value solicitado excede o permitido");
 
-        if(!accounts.contains(requestedAccount)) throw new RuntimeException("O empréstimo só é realizado para contas relacionadas ao bank, contas de outros banks não são permitidas");
+        if (!accounts.contains(requestedAccount))
+            throw new RuntimeException("O empréstimo só é realizado para contas relacionadas ao banco, contas de outros bancos não são permitidas");
 
         Loan loan = new Loan(requestedAccount, requestedValue, installments);
         requestedAccount.deposit(requestedValue);
@@ -89,6 +90,10 @@ public class Bank {
 
     public List<Loan> getLoans() {
         return loans;
+    }
+
+    public void verifyLoan(Loan loan) {
+        if (loan.getInstallmentsPaid() == loan.getInstallments()) loans.remove(loan);
     }
 
     @Override
