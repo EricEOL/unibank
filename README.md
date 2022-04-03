@@ -27,3 +27,4 @@ Para demonstração da utilização do sistema, foram escritos diversos testes c
 
 ## Diagrama de Classe
 
+![class-diagram](https://github.com/EricEOL/unibank/blob/main/images/class-diagram.png)
