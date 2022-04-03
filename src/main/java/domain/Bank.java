@@ -8,7 +8,7 @@ public class Bank {
     private final String cod;
     private final String name;
     private Double bankBalance = 10000000000000000d;
-    private Double accountsBalance;
+    private Double accountsBalance = 0d;
     private List<Account> accounts = new ArrayList();
     private List<Loan> loans = new ArrayList();
 
@@ -81,6 +81,7 @@ public class Bank {
     }
 
     public Double getAccountsBalance() {
+        for(Account account: accounts) this.accountsBalance += account.getBalance();
         return accountsBalance;
     }
 

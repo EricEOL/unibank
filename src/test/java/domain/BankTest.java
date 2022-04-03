@@ -89,4 +89,21 @@ public class BankTest {
 
         Assertions.assertEquals(2, bank.getLoans().size());
     }
+
+    @Test
+    void shouldReturnSumOfBalancesOfAccountsLinkedToTheBank() {
+        Bank bank = new Bank("001", "unibank");
+        Client client1 = new Client("11111111111", "Rebecca Lopes");
+        Client client2 = new Client("22222222222", "Panda Albino");
+
+        Account account1 = bank.newCheckingAccount(client1);
+        Account account2 = bank.newSavingsAccount(client1);
+        Account account3 = bank.newCheckingAccount(client2);
+
+        account1.deposit(4000d);
+        account2.deposit(50000d);
+        account3.deposit(6000d);
+
+        Assertions.assertEquals(60000d, bank.getAccountsBalance());
+    }
 }

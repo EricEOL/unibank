@@ -79,10 +79,6 @@ public class Loan {
         return currentValue;
     }
 
-    public void setCurrentValue(Double currentValue) {
-        this.currentValue = currentValue;
-    }
-
     public Double getValueInstallments() {
         return valueInstallments;
     }
