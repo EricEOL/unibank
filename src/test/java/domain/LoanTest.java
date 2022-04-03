@@ -66,7 +66,7 @@ public class LoanTest {
         System.out.println("Valor da parcela: " + loan.getValueInstallments());
         System.out.println("Balance na conta PAGANDO UMA PARCELA do empréstimo: " + this.account.getBalance());
 
-        Assertions.assertEquals(9333.33, this.account.getBalance());
+        Assertions.assertEquals(9240d, this.account.getBalance());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class LoanTest {
 
         System.out.println("Valor corrente do empréstimo APÓS do pagamento: " + loan.getCurrentValue());
 
-        Assertions.assertEquals(9333.33, loan.getCurrentValue());
+        Assertions.assertEquals(10640d, loan.getCurrentValue());
     }
 
     @Test

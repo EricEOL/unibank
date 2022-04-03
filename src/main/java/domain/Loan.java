@@ -16,11 +16,12 @@ public class Loan {
     public Loan(Account account, Double initialValue, int installments) {
         this.account = account;
         this.initialValue = initialValue;
-        this.currentValue = initialValue;
 
         DecimalFormat dformat = new DecimalFormat("0.00");
 
+        this.currentValue = Double.parseDouble(dformat.format(initialValue * this.calculateRate(installments)));
         this.valueInstallments = Double.parseDouble(dformat.format((initialValue * this.calculateRate(installments))/installments));
+
         this.installments = installments;
 
         GregorianCalendar paymentDate = new GregorianCalendar();
